@@ -1,15 +1,17 @@
 const img = document.querySelector('img');
 const btn = document.querySelector('button');
+const API_KEY = 'W4zXlbYqgvo856mglQF739zN1e9U2uo1';
 
-const getNewGIFs = (query) =>
-  fetch(
-    `https://api.giphy.com/v1/gifs/translate?api_key=W4zXlbYqgvo856mglQF739zN1e9U2uo1&s=${query}`,
+const getNewGIFs = async (query) => {
+  const response = await fetch(
+    `https://api.giphy.com/v1/gifs/translate?api_key=${API_KEY}&s=${query}`,
     {
       mode: 'cors',
     }
-  )
-    .then((response) => response.json())
-    .then((response) => (img.src = response.data.images.original.url));
+  );
+  const queryData = await response.json();
+  img.src = queryData.data.images.original.url;
+};
 
 const searchTerm = () => {
   const query = document.querySelector('input').value || 'cats';
